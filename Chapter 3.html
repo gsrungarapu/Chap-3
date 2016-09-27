@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Chapter 3: Geocoding</title>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+</head>
+
+<body>
+
+
+
+<script type="text/javascript">
+function getAddressLatLng(){
+	var geocoder = new google.maps.Geocoder();
+	var address = document.getElementById("markerAddress").value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var input = String(results[0].geometry.location);
+		console.log(input);
+		var latlngStr = input.substring(1,input.length-1).split(',');
+		document.getElementById("markerLat").value = parseFloat(latlngStr[0]);
+		document.getElementById("markerLng").value = parseFloat(latlngStr[1]);
+		//console.log(results);
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+}
+</script>
+
+<table>
+  <tr>
+    <td>Address: </td>
+	<td><input type="text" id="markerAddress"></td>
+  </tr>
+  <tr>
+    <td>Latitude: </td>
+	<td><input type="text" id="markerLat"></td>
+  </tr>
+  <tr>
+    <td>Longitude: </td>
+	<td><input type="text" id="markerLng"></td>
+  </tr>
+  <tr>
+    <td colspan="2"><span onClick="getAddressLatLng();">Geocode this address</span></td>
+  </tr>
+</table>
+
+
+</body>
+</html>
